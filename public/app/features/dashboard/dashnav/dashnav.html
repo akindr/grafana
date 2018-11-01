@@ -4,6 +4,7 @@
 		<a class="navbar-page-btn" ng-click="ctrl.showSearch()">
 			<i class="gicon gicon-dashboard"></i>
 			{{ctrl.dashboard.title}}
+
 			<i class="fa fa-caret-down"></i>
 		</a>
 	</div>
@@ -14,7 +15,9 @@
 		<a class="navbar-button navbar-button--tight" ng-click="ctrl.playlistSrv.next()"><i class="fa fa-step-forward"></i></a>
 	</div>
 
-	<div class="navbar__spacer"></div>
+	<div class="navbar__spacer" style="align-items: center; justify-content: flex-end; display: flex; padding-right: 12px">
+    <a href="https://ugrafana-deprecated.uberinternal.com/dashboard/db/{{ctrl.dashboard.title}}">Click to view in Grafana 4 (deprecated)</a>
+  </div>
 
 	<div class="navbar-buttons navbar-buttons--actions">
 		<button class="btn navbar-button navbar-button--add-panel" ng-show="::ctrl.dashboard.meta.canSave" bs-tooltip="'Add panel'" data-placement="bottom" ng-click="ctrl.addPanel()">
