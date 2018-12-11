@@ -93,8 +93,9 @@ class MetricsPanelCtrl extends PanelCtrl {
       return;
     }
 
-    // clear loading/error state
+    // clear datasource response state & loading flag
     delete this.error;
+    delete this.warning;
     this.loading = true;
 
     // load datasource service
@@ -245,6 +246,11 @@ class MetricsPanelCtrl extends PanelCtrl {
   handleQueryResult(result) {
     this.setTimeQueryEnd();
     this.loading = false;
+
+    // check for info or warning messages
+    if (result && result.warning) {
+      this.warning = result.warning;
+    }
 
     // check for if data source returns subject
     if (result && result.subscribe) {
