@@ -36,7 +36,7 @@ func (cr *configReader) readConfig(path string) ([]*DatasourcesAsConfig, error) 
 		}
 	}
 
-	err = validateDefaultUniqueness(datasources)
+	err = validateDefaultUniqueness(cr, datasources)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (cr *configReader) parseDatasourceConfig(path string, file os.FileInfo) (*D
 	return v0.mapToDatasourceFromConfig(apiVersion.ApiVersion), nil
 }
 
-func validateDefaultUniqueness(datasources []*DatasourcesAsConfig) error {
+func validateDefaultUniqueness(cr *configReader, datasources []*DatasourcesAsConfig) error {
 	defaultCount := map[int64]int{}
 	for i := range datasources {
 		if datasources[i].Datasources == nil {
@@ -93,6 +93,8 @@ func validateDefaultUniqueness(datasources []*DatasourcesAsConfig) error {
 			if ds.OrgId == 0 {
 				ds.OrgId = 1
 			}
+
+			cr.log.Debug("Datasource from config", "name", ds.Name, "org id", ds.OrgId, "version", ds.Version)
 
 			if ds.IsDefault {
 				defaultCount[ds.OrgId] = defaultCount[ds.OrgId] + 1

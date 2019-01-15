@@ -52,6 +52,7 @@ func (dc *DatasourceProvisioner) apply(cfg *DatasourcesAsConfig) error {
 		} else {
 			dc.log.Debug("updating datasource from configuration", "name", ds.Name)
 			updateCmd := createUpdateCommand(ds, cmd.Result.Id)
+			dc.log.Debug("Update command", "command id", updateCmd.Id, "command org id", updateCmd.OrgId, "version", updateCmd.Version)
 			if err := bus.Dispatch(updateCmd); err != nil {
 				return err
 			}
